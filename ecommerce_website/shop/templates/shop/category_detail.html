@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products in {{ category.name }}</title>
+</head>
+<body>
+    <h1>Products in {{ category.name }}</h1>
+    <ul>
+        {% for product in products %}
+        <li>
+            {{ product.name }}
+            <hr>
+            {{product.description}} - {{ product.price }} 
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'index' %}">Back to Categories</a>
+</body>
+</html>
