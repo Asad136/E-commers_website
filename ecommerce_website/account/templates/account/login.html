@@ -10,7 +10,7 @@
             <p style="color: red;">{{ message }}</p>
         {% endfor %}
     {% endif %}
-    <form method="post">
+    <form action="{% url 'account:login' %}" method="post">
         {% csrf_token %}
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>

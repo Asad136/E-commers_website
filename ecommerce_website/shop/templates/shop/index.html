@@ -8,7 +8,7 @@
     <ul>
         {% for category in categories %}
         <li>
-            <a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a>
+            <a href="{% url 'shop:category_detail' category.pk %}">{{ category.name }}</a>
             <p>{{category.description}}
             </p>
         </li>
@@ -16,13 +16,13 @@
     </ul>
     {% if user.is_authenticated %}
         {% if user.is_superuser %}
-        <a href="{% url 'add_category' %}"><button>Add Category</button></a>
-        <a href="{% url 'add_product' %}"><button>Add Product</button></a>
+        <a href="{% url 'shop:add_category' %}"><button>Add Category</button></a>
+        <a href="{% url 'shop:add_product' %}"><button>Add Product</button></a>
         {% endif %}
-        <a href="{% url 'logout' %}"><button>Logout</button></a>
+        <a href="{% url 'account:logout' %}"><button>Logout</button></a>
     {% else %}
-        <a href="{% url 'login' %}"><button>Login</button></a>
-        <a href="{% url 'signup' %}"><button>Sign Up</button></a>
+        <a href="{% url 'account:login' %}"><button>Login</button></a>
+        <a href="{% url 'account:signup' %}"><button>Sign Up</button></a>
     {% endif %}
     
 </body>

@@ -5,11 +5,11 @@
 </head>
 <body>
     <h1>Add Category</h1>
-    <form method="post">
+    <form  action="{% url 'shop:add_category' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Add</button>
     </form>
-    <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+    <a href="{% url 'shop:admin_dashboard' %}">Back to Dashboard</a>
 </body>
 </html>

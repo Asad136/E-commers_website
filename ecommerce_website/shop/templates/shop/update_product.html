@@ -5,12 +5,12 @@
 </head>
 <body>
     <h1>Update Product</h1>
-    <form method="post">
+    <form action = "{% url 'shop:update_product' pk=pk %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Update</button>
     </form>
-    <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+    <a href="{% url 'shop:admin_dashboard' %}">Back to Dashboard</a>
 </body>
 </html>
 

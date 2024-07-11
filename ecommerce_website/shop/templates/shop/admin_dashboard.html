@@ -5,15 +5,15 @@
 </head>
 <body>
     <h1>Admin Dashboard</h1>
-    <a href="{% url 'add_category' %}">Add Category</a>
-    <a href="{% url 'add_product' %}">Add Product</a>
+    <a href="{% url 'shop:add_category' %}">Add Category</a>
+    <a href="{% url 'shop:add_product' %}">Add Product</a>
     <h2>Categories</h2>
     <ul>
         {% for category in categories %}
         <li>
             {{ category.name }}
-            <a href="{% url 'update_category' category.pk %}">Edit</a>
-            <a href="{% url 'delete_category' category.pk %}">Delete</a>
+            <a href="{% url 'shop:update_category' pk=category.pk %}">Edit</a>
+            <a href="{% url 'shop:delete_category' pk=category.pk %}">Delete</a>
         </li>
         {% endfor %}
     </ul>
@@ -22,8 +22,8 @@
         {% for product in products %}
         <li>
             {{ product.name }}
-            <a href="{% url 'update_product' product.pk %}">Edit</a>
-            <a href="{% url 'delete_product' product.pk %}">Delete</a>
+            <a href="{% url 'shop:update_product' pk=product.pk %}">Edit</a>
+            <a href="{% url 'shop:delete_product' pk=product.pk %}">Delete</a>
         </li>
         {% endfor %}
     </ul>
