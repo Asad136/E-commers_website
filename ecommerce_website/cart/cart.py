@@ -5,7 +5,6 @@ class Cart:
         cart = self.session.get('session_key')
         if 'session_key' not in request.session:
             cart = self.session['session_key'] = {}
-        # Ensure all items in the cart have a 'quantity' key
         for key, value in cart.items():
             if 'quantity' not in value:
                 value['quantity'] = 1

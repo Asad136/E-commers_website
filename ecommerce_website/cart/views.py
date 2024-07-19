@@ -12,7 +12,7 @@ def cart_add(request):
     cart = Cart(request)
     if request.POST.get('action') == 'post':
         product_id = int(request.POST.get('product_id'))
-        quantity = int(request.POST.get('quantity', 1))  # Default to 1 if not provided
+        quantity = int(request.POST.get('quantity', 1)) 
         product = get_object_or_404(Product, id=product_id)
         cart.add(product=product, quantity=quantity)
         cart_quantity = cart.__len__()
