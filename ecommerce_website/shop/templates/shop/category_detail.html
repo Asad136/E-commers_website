@@ -2,18 +2,49 @@
 <html>
 <head>
     <title>Products in {{ category.name }}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+    <h3><a href="{% url 'cart:cart_summery' %}"> cart 
+    <span id="cart_quantity">{{ cart|length }}</span> </a></h3>
     <h1>Products in {{ category.name }}</h1>
     <ul>
         {% for product in products %}
         <li>
             {{ product.name }}
             <hr>
-            {{product.description}} - {{ product.price }} 
+            {{ product.description }} - {{ product.price }} {{ product.id }}
+            <br>
+            <input type="number" class="product-quantity" value="1" min="1" max="8" data-product-id="{{ product.id }}">
+            <button type="button" value="{{ product.id }}" class="add-cart">Add to Cart</button>
         </li>
         {% endfor %}
     </ul>
     <a href="{% url 'shop:index' %}">Back to Categories</a>
+    <script>
+        $(document).on('click', ".add-cart", function(e) {
+            e.preventDefault();
+            var product_id = $(this).val();
+            var quantity = $('.product-quantity[data-product-id="' + product_id + '"]').val();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart:cart_add" %}',
+                data: {
+                    product_id: product_id,
+                    quantity: quantity,  // Include quantity
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function(json) {
+                    console.log(json);
+                    document.getElementById("cart_quantity").textContent = json.cart_quantity;
+                },
+                error: function(xhr, errmsg, err) {
+                    console.log(errmsg);
+                }
+            });
+        });
+        
+    </script>
 </body>
 </html>

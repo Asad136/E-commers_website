@@ -3,10 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cart_summery</title>
+    <title>Cart Summary</title>
+    <style>
+        .quantity-container {
+            display: flex;
+            align-items: center;
+        }
+        .quantity-container select {
+            width: 70px;
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>cart_summery</h1>
-    <p>view your cart</p>
+    <h1>Cart Summary</h1>
+    <p>View your cart</p>
+    <div>
+        {% if cart_products %}
+            <ul>
+                {% for product in cart_products %}
+                    <li>
+                        <strong>{{ product.name }}</strong>
+                        <hr>
+                        {{ product.description }} - {{ product.price }} - ID: {{ product.id }}
+                        <br>
+                        <div class="quantity-container">
+                            <select id="qty-cart-{{ product.id }}" class="qty-cart" data-product-id="{{ product.id }}">
+                                {% for i in "123456789" %}
+                                    <option value="{{ i }}" {% if product.quantity == i|add:"0" %}selected{% endif %}>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <button class="remove-cart" data-product-id="{{ product.id }}">Remove</button>
+                        </div>
+                        <hr>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <span>Nothing in cart</span>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.qty-cart').change(function() {
+                var product_id = $(this).data('product-id');
+                var quantity = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "cart:cart_update" %}',
+                    data: {
+                        product_id: product_id,
+                        quantity: quantity,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        action: 'post'
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr, errmsg, err) {
+                        console.log(errmsg);
+                    }
+                });
+            });
+
+            $('.remove-cart').click(function() {
+                var product_id = $(this).data('product-id');
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "cart:cart_delete" %}',
+                    data: {
+                        product_id: product_id,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        action: 'post'
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr, errmsg, err) {
+                        console.log(errmsg);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
