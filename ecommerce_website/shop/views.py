@@ -4,11 +4,7 @@ from django.urls import reverse
 from .forms import CategoryForm, ProductForm
 from django.contrib.auth.decorators import user_passes_test
 
-def customdecorator(fx):
-    def innerfunction():
-        print("this is custom decorator which is for test purpose and will print this linethen the function below ")
-        fx()
-        return innerfunction
+
 
 def admin_required(user):
     return user.is_superuser
